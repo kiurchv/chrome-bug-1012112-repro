@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Child Window</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <h1>Child window</h1>
+    <header>
+      This is a sample for reproduction of Chromium bug
+      <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=1012112"
+        >1012112</a
+      >
+    </header>
+
+    <h2>Reproduction steps:</h2>
+    <ol>
+      <li>[Steps 1-2 was made in the parent window]</p>
+      <li value="3">
+        Try to fire some events by clicking on the button — event listener
+        should write some text under button.
+      </li>
+      <li>Open developer tools</li>
+      <li>Switch to the parent window</li>
+      <li>[Steps 6-7 should be made in the parent window]</li>
+      <li value="8">
+        Try to click on the button again.
+        <br />
+        <b>Expected behavior:</b> events firing, event listener appends text
+        <br />
+        <b>Actual behavior:</b> nothing happening, event listener does not recieves any events
+      </li>
+    </ol>
+
+    <button id="btn">Fire event</button>
+
+    <pre id="logs"></pre>
+
+    <script>
+      const handleClick = () => {
+        document.getElementById("logs").textContent += "Button was pressed\n";
+      };
+
+      document
+        .getElementById("btn")
+        .addEventListener("click", handleClick);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parent Window</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <h1>Parent window</h1>
+    <header>
+      This is a sample for reproduction of Chromium bug
+      <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=1012112"
+        >1012112</a
+      >
+    </header>
+
+    <h2>Reproduction steps:</h2>
+    <ol>
+      <li>Open the child window by clicking on the "Open window" button</li>
+      <li>Switch to the child window</li>
+      <li>[Steps 3-5 should be made in the child window]</li>
+      <li value="6">
+        Try to close child window by clicking on the "Close window" button
+        <br />
+        <b>Expected behavior:</b> the child window closes
+        <br />
+        <b>Actual behavior:</b> the child window remains opened
+      </li>
+      <li>Switch to the child window</li>
+      <li>[Step 8 should be made in the child window]</li>
+    </ol>
+
+    <button id="open-btn">
+      Open window
+    </button>
+
+    <button id="close-btn">
+      Close window
+    </button>
+
+    <script>
+      let childWindow = null;
+
+      const openWindow = () => {
+        childWindow = window.open("child.html");
+        console.log("Child window should open");
+      };
+
+      const closeWindow = () => {
+        if (childWindow !== null) {
+          childWindow.close();
+          console.log("Child window should be closed");
+        }
+      };
+
+      document.getElementById("open-btn").addEventListener("click", openWindow);
+
+      document
+        .getElementById("close-btn")
+        .addEventListener("click", closeWindow);
+    </script>
+  </body>
+</html>
